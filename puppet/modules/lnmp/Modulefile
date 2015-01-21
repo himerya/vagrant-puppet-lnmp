@@ -1,0 +1,8 @@
+name    'tuxone-lnmp'
+version '1.0.0'
+source '-'
+author 'Alessandro Loffredo'
+
+summary 'Configure Linux Nginx Mysql PHP app.'
+description 'nginx php5-fpm mysql'
+project_page '-'

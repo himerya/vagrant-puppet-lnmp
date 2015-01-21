@@ -1,0 +1,30 @@
+server {
+	listen 80;
+
+	root <%= @www_root %>;
+	index index.html index.htm index.php;
+
+	server_name <%= @hostname %>;
+
+	error_log /var/log/nginx/symfony2.error.log;
+	access_log /var/log/nginx/symfony2.access.log;
+
+	index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php;
+    }
+
+	location ~ \.php$ {
+		fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+	}
+
+	# Deny all attempts to access hidden files such as .htaccess, .htpasswd, .DS_Store (Mac).
+	# Keep logging the requests to parse later (or to pass to firewall utilities such as fail2ban)
+	location ~ /\. {
+		deny all;
+	}
+}
